@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>261</x>
+      <y>108</y>
+      <w>144</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Pesquisador
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>108</y>
+      <w>135</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Artigo
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>162</y>
+      <w>270</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..m
+m2=0..n
+publicou &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>333</x>
+      <y>270</y>
+      <w>27</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>81</x>
+      <y>342</y>
+      <w>153</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Graduado
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>252</x>
+      <y>342</y>
+      <w>153</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Mestre
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>414</x>
+      <y>342</y>
+      <w>153</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Doutor
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>153</x>
+      <y>270</y>
+      <w>207</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>210.0;10.0;210.0;40.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>333</x>
+      <y>270</y>
+      <w>180</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;180.0;80.0</additional_attributes>
+  </element>
+</diagram>
