@@ -1,161 +1,273 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.2">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>261</x>
-      <y>108</y>
-      <w>144</w>
-      <h>171</h>
+      <x>56</x>
+      <y>96</y>
+      <w>384</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>Pesquisador
-{Some Properties}
 --
 -id: Long
-_-ClassAttribute: Long_
+-qteHorasIniciacaoCientifica: Long
+-qteHorasEstagioDoencia: Long
+-artigosPublicados: Collection &lt;PublicacaoArtigo&gt;
 --
-#Operation(i: int): int
-/+AbstractOperation()/
---
-Responsibilities
--- Resp1
-*-- Resp2*</panel_attributes>
++calcularPeso(): int
++adicionarArtigoPublicado(artigo: Artigo, ordem: Int): void
+/+calcularPopularidade(): Double/
+_+carregarPesquisadores(caminhoArquivo: string): Collection &lt;Pesquisador&gt;_
+_+carregarPublicacoes(caminhoArquivo: string,_
+_                                    pesquisadores: Collection &lt;Pesquisador&gt;): void_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>648</x>
-      <y>108</y>
-      <w>135</w>
-      <h>171</h>
+      <x>736</x>
+      <y>64</y>
+      <w>312</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>Artigo
-{Some Properties}
 --
 -id: Long
-_-ClassAttribute: Long_
+_-veiculoPublicado: Veiculo_
+_-citadoPor: Collection &lt;Artigo&gt;_
 --
-#Operation(i: int): int
-/+AbstractOperation()/
---
-Responsibilities
--- Resp1
-*-- Resp2*</panel_attributes>
++calcularQualidade(): Double
++adicionarCitacao(artigo: Artigo): Double
+_+carregarArtigos(caminhoArquivo: string): Collection &lt;Artigo&gt;_
+_+carregarCitacoes(caminhoArquivo: string,_
+_                               artigos: Collection &lt;Artigo&gt;): void_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>162</y>
-      <w>270</w>
-      <h>45</h>
+      <x>432</x>
+      <y>136</y>
+      <w>104</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=-
-m1=1..m
+m1=1
 m2=0..n
-publicou &gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+participa &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0;110.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>270</y>
-      <w>27</w>
-      <h>90</h>
+      <x>224</x>
+      <y>248</y>
+      <w>48</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;40.0;70.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>81</x>
-      <y>342</y>
-      <w>153</w>
-      <h>171</h>
+      <x>8</x>
+      <y>304</y>
+      <w>168</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Graduado
-{Some Properties}
 --
--id: Long
-_-ClassAttribute: Long_
+
 --
-#Operation(i: int): int
-/+AbstractOperation()/
---
-Responsibilities
--- Resp1
-*-- Resp2*</panel_attributes>
+/+calcularPopularidade(): Double/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>252</x>
-      <y>342</y>
-      <w>153</w>
-      <h>171</h>
+      <x>184</x>
+      <y>304</y>
+      <w>168</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Mestre
-{Some Properties}
 --
--id: Long
-_-ClassAttribute: Long_
+-qteAlunosGraduacaoOrientados: Long
 --
-#Operation(i: int): int
-/+AbstractOperation()/
---
-Responsibilities
--- Resp1
-*-- Resp2*</panel_attributes>
+/+calcularPopularidade(): Double/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
-      <y>342</y>
-      <w>153</w>
-      <h>171</h>
+      <x>360</x>
+      <y>304</y>
+      <w>200</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Doutor
-{Some Properties}
 --
--id: Long
-_-ClassAttribute: Long_
+-qteAlunosMestradoOrientados: Long
+-qteAlunosDoutoradoOrientados: Long
 --
-#Operation(i: int): int
-/+AbstractOperation()/
---
-Responsibilities
--- Resp1
-*-- Resp2*</panel_attributes>
+/+calcularPopularidade(): Double/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
-      <y>270</y>
-      <w>207</w>
-      <h>90</h>
+      <x>72</x>
+      <y>248</y>
+      <w>176</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>210.0;10.0;210.0;40.0;10.0;80.0</additional_attributes>
+    <additional_attributes>200.0;10.0;200.0;40.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>270</y>
-      <w>180</w>
-      <h>90</h>
+      <x>224</x>
+      <y>248</y>
+      <w>224</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0;180.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;260.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>792</x>
+      <y>272</y>
+      <w>232</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>Veículo
+--
+-id: Long
+_-artigosPublicados: Collection &lt;Artigos&gt;_
+--
+/+calcularFatorImpacto(): Double/
+_+carregarVeiculos(caminhoArquivo: string):_
+_       Collection &lt;Veiculo&gt;_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>904</x>
+      <y>184</y>
+      <w>112</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..n
+É publicado por &gt;</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>704</x>
+      <y>472</y>
+      <w>168</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Conferência
+--
+
+--
++calcularFatorImpacto(): Double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>888</x>
+      <y>472</y>
+      <w>176</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Revista
+--
+
+--
++calcularFatorImpacto(): Double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>776</x>
+      <y>392</y>
+      <w>136</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;150.0;90.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>888</x>
+      <y>392</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;110.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>456</y>
+      <w>296</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>_MainRedeSocial_
+--
+_-artigos: Collection &lt;Artigo&gt;_
+_-pesquisadores: Collection &lt;Pesquisador&gt;_
+_-veiculos: Collection &lt;Veiculo&gt;_
+--
+#carregarVeiculosDosArtigos(caminhoArquivo: string): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>120</y>
+      <w>152</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>PublicacaoArtigo
+--
+-artigo: Artigo
+-ordem: Integer
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>664</x>
+      <y>136</y>
+      <w>88</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..n
+m2=1
+ &gt;</panel_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>
