@@ -6,22 +6,18 @@ public class PesquisadorDoutor extends Pesquisador {
 	private Integer qteAlunosDouturadoOrientados;
 	
 	public Integer getQteAlunosMestradoOrientados() {
-		return qteAlunosMestradoOrientados;
-	}
-
-	public void setQteAlunosMestradoOrientados(
-			Integer qteAlunosMestradoOrientados) {
-		this.qteAlunosMestradoOrientados = qteAlunosMestradoOrientados;
+            return qteAlunosMestradoOrientados;
 	}
 
 	public Integer getQteAlunosDouturadoOrientados() {
-		return qteAlunosDouturadoOrientados;
+            return qteAlunosDouturadoOrientados;
 	}
-
-	public void setQteAlunosDouturadoOrientados(
-			Integer qteAlunosDouturadoOrientados) {
-		this.qteAlunosDouturadoOrientados = qteAlunosDouturadoOrientados;
-	}
+        
+        public PesquisadorDoutor(Long id, Integer qteHorasIC, Integer qteHorasED, Integer qteAlunosMestrado, Integer qteAlunosDoutorado){
+            super(id, qteHorasIC, qteHorasED);
+            this.qteAlunosMestradoOrientados = qteAlunosMestrado;
+            this.qteAlunosDouturadoOrientados = qteAlunosDoutorado;
+        }
 
 	@Override
 	public Double calcularPopularidade() {
