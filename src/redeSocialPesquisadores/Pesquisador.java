@@ -1,6 +1,9 @@
 package redeSocialPesquisadores;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public abstract class Pesquisador {
 	
@@ -40,14 +43,14 @@ public abstract class Pesquisador {
     }
 
     /**
-    * Método abstrato que calcula a popularidade de um pesquisador.
+    * Metodo abstrato que calcula a popularidade de um pesquisador.
     * <p>
     * Deve ser implementado pelas classes filhas.
     */
     public abstract Double calcularPopularidade();
 
     /**
-    * Adiciona um artigo e sua ordem de publicação à lista de publicações do pesquisador.
+    * Adiciona um artigo e sua ordem de publicacao a lista de publicacoes do pesquisador.
     */
     public void adicionarArtigoPublicado(Artigo a, Integer ordem) {
         PublicacaoArtigo publicacao = new PublicacaoArtigo(a, ordem);
@@ -56,16 +59,55 @@ public abstract class Pesquisador {
     }
 
     /**
-    * Método estático que lê um arquivo contendo os pesquisadores e seus dados
-    * e carrega uma lista de pesquisadores, que é retornada.
+    * Metodo estatico que le um arquivo contendo os pesquisadores e seus dados
+    * e carrega uma lista de pesquisadores, que e retornada.
     */
     public static LinkedList<Pesquisador> carregarPesquisadores(String caminhoArquivo) {
-        LinkedList<Pesquisador> listaPesquisadores = new LinkedList<Pesquisador>();
+        Long idPesquisador;
+    	String tagTitulacao;
+    	Integer qtdHorasIC;
+    	Integer qtdHorasED;
+    	Integer numGradOrient;
+    	Integer numMestOrient;
+    	Integer numDocOrient;
+    	        
+    	LinkedList<Pesquisador> listaPesquisadores = new LinkedList<Pesquisador>();
+        Pesquisador pesquisador = null;
+        Scanner arqPesquisadores = null;
+
+        try {
+        	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        } catch (FileNotFoundException ex) {
+        	// tratar excecao de arquivo n�o encontrado
+        }
+        
+        while (arqPesquisadores.hasNext()) {
+        	idPesquisador = arqPesquisadores.nextLong();
+        	tagTitulacao = arqPesquisadores.next();
+        	qtdHorasIC = arqPesquisadores.nextInt();
+        	qtdHorasED = arqPesquisadores.nextInt();
+        	numGradOrient = arqPesquisadores.nextInt();
+        	numMestOrient = arqPesquisadores.nextInt();
+        	numDocOrient = arqPesquisadores.nextInt();
+        	
+        	if (tagTitulacao.equals("G")) {
+        		pesquisador = new PesquisadorGraduado(idPesquisador, qtdHorasIC, qtdHorasED);
+        	}
+        	else if (tagTitulacao.equals("M")) {
+        		pesquisador = new PesquisadorMestre(idPesquisador, qtdHorasIC, qtdHorasED, numGradOrient);
+        	} 
+        	else if (tagTitulacao.equals("D")) {
+        		pesquisador = new PesquisadorDoutor(idPesquisador, qtdHorasIC, qtdHorasED, numGradOrient, numMestOrient, numDocOrient);
+        	}
+        	
+        	listaPesquisadores.add(pesquisador);
+        } 
+ 
         return listaPesquisadores;
     }
 
     /**
-    * Método estático. Lê um arquivo contendo as publicações de artigos pelos
+    * Metodo estatico. Le um arquivo contendo as publicacoes de artigos pelos
     * pesquisadores, uma por linha, no formato "id_artigo;id_pesquisador;ordem_publicacao",
     * carregando os dados nas listas de artigos publicados dos pesquisadores.
     * 
@@ -78,10 +120,10 @@ public abstract class Pesquisador {
     }
     
     /**
-    * Método estático. Escreve a popularidade dos pesquisadores em um arquivo texto,
+    * Metodo estatico. Escreve a popularidade dos pesquisadores em um arquivo texto,
     * um registro por linha, no formato "id_pesquisador;popularidade"
     * 
-    * @param caminhoArquivo caminho completo do arquivo que será gerado
+    * @param caminhoArquivo caminho completo do arquivo que sera gerado
     * @param pesquisadores lista de pesquisadores da rede social
     */
     public static void escreverPopularidades(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores) {

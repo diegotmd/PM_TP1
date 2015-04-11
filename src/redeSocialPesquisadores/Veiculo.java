@@ -12,30 +12,30 @@ public abstract class Veiculo {
     }
 
     /**
-    * Método abstrato. Calcula fator de impacto de um veículo.
+    * Metodo abstrato. Calcula fator de impacto de um veiculo.
     * Deve ser implementado pelas classes filhas.
     * 
     */
     public abstract Double calcularFatorImpacto();
 
     /**
-    * Método estático. Lê um arquivo contendo os veículos,
+    * Metodo estatico. Le um arquivo contendo os veiculos,
     * um por linha, no formato "id_veiculo;tipo_veiculo",
-    * carregando os dados em uma lista de veiculos, que é retornada. 
+    * carregando os dados em uma lista de veiculos, que e retornada. 
     * 
-    * @param caminhoArquivo caminho completo do arquivo contendo os dados de veículos
+    * @param caminhoArquivo caminho completo do arquivo contendo os dados de veiculos
     */
     public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo){
-        LinkedList<Veiculo> veiculos= new LinkedList<Veiculo>(); 
+        LinkedList<Veiculo> veiculos = new LinkedList<Veiculo>(); 
         return veiculos;
     }
         
     /**
-    * Método estático. Escreve o fator de impacto dos veículos em um arquivo texto,
+    * Metodo estatico. Escreve o fator de impacto dos veiculos em um arquivo texto,
     * um registro por linha, no formato "id_veiculo;fator_impacto"
     * 
-    * @param caminhoArquivo caminho completo do arquivo que será gerado
-    * @param veiculos lista de veículos da rede social
+    * @param caminhoArquivo caminho completo do arquivo que sera gerado
+    * @param veiculos lista de veiculos da rede social
     */
     public static void escreverFatorImpactoVeiculos(String caminhoArquivo, LinkedList<Veiculo> veiculos) {
         return;

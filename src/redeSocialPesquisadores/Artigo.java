@@ -37,11 +37,11 @@ public class Artigo {
     }
 
     /**
-    * Método estático. Lê o conteúdo de um arquivo contendo os artigos no formato
+    * Metodo estatico. Le o conteudo de um arquivo contendo os artigos no formato
     * "id_artigo;id_veiculo_publicador"
     * 
     * @param artigo Artigo citador.
-    * @param veiculos Lista de veículos existentes na rede social.
+    * @param veiculos Lista de veiculos existentes na rede social.
     */
     public static LinkedList<Artigo> carregarArtigos(String caminhoArquivo, LinkedList<Veiculo> veiculos){
         LinkedList<Artigo> artigos = new LinkedList<Artigo>(); 
@@ -49,23 +49,23 @@ public class Artigo {
     }
 
     /**
-    * Método estático. Lê o conteúdo de um arquivo contendo as citações no formato
+    * Metodo estatico. Le o conteudo de um arquivo contendo as citacoes no formato
     * "id_artigo_citado;id_artigo_citador", e carrega os dados na lista de artigos
-    * existentes na rede social, recebido como parâmetro.
+    * existentes na rede social, recebido como parametro.
     * 
     * @param artigo Artigo citador.
-    * @param veiculos Lista de veículos existentes na rede social.
+    * @param veiculos Lista de veiculos existentes na rede social.
     */
     public static void carregarCitacoes(String caminhoArquivo, LinkedList<Artigo> artigos){
         return;
     }
     
     /**
-    * Método estático. Escreve a qualidade dos artigos em um arquivo texto,
+    * Metodo estatico. Escreve a qualidade dos artigos em um arquivo texto,
     * um registro por linha, no formato "id_artigo;qualidade"
     * 
-    * @param caminhoArquivo caminho completo do arquivo que será gerado
-    * @param artigos lista de veículos da rede social
+    * @param caminhoArquivo caminho completo do arquivo que sera gerado
+    * @param artigos lista de veiculos da rede social
     */
     public static void escreverQualidadeArtigos(String caminhoArquivo, LinkedList<Artigo> artigos) {
         return;
