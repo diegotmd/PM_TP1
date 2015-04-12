@@ -20,15 +20,15 @@ public abstract class Pesquisador {
     }
 
     public Long getIdPesquisador() {
-            return idPesquisador;
+    	return idPesquisador;
     }
 
     public Integer getQteHorasIniciacaoCientifica() {
-            return qteHorasIniciacaoCientifica;
+    	return qteHorasIniciacaoCientifica;
     }
 
     public Integer getQteHorasEstagioDocencia() {
-            return qteHorasEstagioDocencia;
+    	return qteHorasEstagioDocencia;
     }
 
     /**
@@ -70,6 +70,7 @@ public abstract class Pesquisador {
     	Integer numGradOrient;
     	Integer numMestOrient;
     	Integer numDocOrient;
+    	String strAux;
     	        
     	LinkedList<Pesquisador> listaPesquisadores = new LinkedList<Pesquisador>();
         Pesquisador pesquisador = null;
@@ -88,16 +89,21 @@ public abstract class Pesquisador {
         	qtdHorasED = arqPesquisadores.nextInt();
         	numGradOrient = arqPesquisadores.nextInt();
         	numMestOrient = arqPesquisadores.nextInt();
-        	numDocOrient = arqPesquisadores.nextInt();
         	
-        	if (tagTitulacao.equals("G")) {
+        	// seleciona último campo como string e retira último caractere antes de converter para inteiro (quebra de linha)
+        	strAux = arqPesquisadores.next();
+        	numDocOrient = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
+        	
+        	switch (tagTitulacao) {
+        	case "G":
         		pesquisador = new PesquisadorGraduado(idPesquisador, qtdHorasIC, qtdHorasED);
-        	}
-        	else if (tagTitulacao.equals("M")) {
+        	break;
+        	case "M":
         		pesquisador = new PesquisadorMestre(idPesquisador, qtdHorasIC, qtdHorasED, numGradOrient);
-        	} 
-        	else if (tagTitulacao.equals("D")) {
+        	break;
+        	case "D":
         		pesquisador = new PesquisadorDoutor(idPesquisador, qtdHorasIC, qtdHorasED, numGradOrient, numMestOrient, numDocOrient);
+        	break;
         	}
         	
         	listaPesquisadores.add(pesquisador);

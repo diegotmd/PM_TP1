@@ -1,6 +1,9 @@
 package redeSocialPesquisadores;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public abstract class Veiculo {
 
@@ -26,7 +29,35 @@ public abstract class Veiculo {
     * @param caminhoArquivo caminho completo do arquivo contendo os dados de veiculos
     */
     public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo){
-        LinkedList<Veiculo> veiculos = new LinkedList<Veiculo>(); 
+        Long idVeiculo;
+    	Character tipoVeiculo;
+        
+    	LinkedList<Veiculo> veiculos = new LinkedList<Veiculo>();
+        Veiculo veiculo = null;
+        Scanner arqVeiculos = null;
+        
+        try {
+        	arqVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        } catch (FileNotFoundException ex) {
+        	// tratar excecao de arquivo não encontrado
+        }
+        
+        while (arqVeiculos.hasNext()) {
+        	idVeiculo = arqVeiculos.nextLong();
+        	tipoVeiculo = arqVeiculos.next().toCharArray()[0];
+        	
+        	switch (tipoVeiculo) {
+        	case 'R':
+        		veiculo = new Revista(idVeiculo);
+        	break;
+        	case 'C':
+        		veiculo = new Conferencia(idVeiculo);
+        	break;
+        	}
+        	
+        	veiculos.add(veiculo);
+        } 
+ 
         return veiculos;
     }
         
