@@ -10,5 +10,4 @@ public class Revista extends Veiculo {
     public Double calcularFatorImpacto() {
         return this.calcularFatorImpactoBase() + 2.0;
     }
-
 }

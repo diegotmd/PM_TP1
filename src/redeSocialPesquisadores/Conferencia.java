@@ -10,5 +10,4 @@ public class Conferencia extends Veiculo {
     public Double calcularFatorImpacto() {
         return this.calcularFatorImpactoBase() + 1.0;
     }
-
 }

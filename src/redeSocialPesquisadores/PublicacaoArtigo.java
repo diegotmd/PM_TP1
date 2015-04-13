@@ -14,8 +14,8 @@ public class PublicacaoArtigo {
     }
 
     public PublicacaoArtigo (Artigo a, Integer o) {
-            this.artigo = a;
-            this.ordem = o;
+    	this.artigo = a;
+        this.ordem = o;
     }
     
 }

@@ -28,9 +28,9 @@ public class Artigo {
         return veiculoPublicado;
     }
 
-    public Double calcularQualidade(){
+    public Double calcularQualidade() {
         Double fatorImpactoVeiculo = veiculoPublicado.calcularFatorImpacto();
-        Double qteCitacoes = (double) citadoPorArtigos.size();
+        Double qteCitacoes = (double) this.quantidadeDeCitacoes();
         return fatorImpactoVeiculo * qteCitacoes;
     }
     
@@ -73,13 +73,15 @@ public class Artigo {
         while (arqArtigosVeiculos.hasNextLong()) {
         	idArtigo = arqArtigosVeiculos.nextLong();
 
-        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Integereiro (quebra de linha)
+        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
         	strAux = arqArtigosVeiculos.next();
         	idVeiculo = Long.parseLong(strAux.substring(0, strAux.length() - 1));
         	
+        	// encontra veiculo, cria artigo e associa a lista de artigos do veiculo
         	for (Veiculo veiculo : veiculos) {
         		if (veiculo.getIdVeiculo().equals(idVeiculo)) {
         			artigo = new Artigo(idArtigo, veiculo);
+        			veiculo.adicionarArtigoPublicado(artigo);
         		}
         	}
         	
@@ -99,8 +101,6 @@ public class Artigo {
     * @param veiculos Lista de veiculos existentes na rede social.
     */
     public static void carregarCitacoes(String caminhoArquivo, LinkedList<Artigo> artigos){
-        // FALTA TESTAR
-        
         Long idArtigo, idArtigoCitador;
     	String strAux;
         
@@ -117,7 +117,7 @@ public class Artigo {
         while (arqCitacoesArtigos.hasNextLong()) {
             idArtigo = arqCitacoesArtigos.nextLong();
 
-            // seleciona ultimo campo como string e retira ultimo caractere antes de converter para Integereiro (quebra de linha)
+            // seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
             strAux = arqCitacoesArtigos.next();
             idArtigoCitador = Long.parseLong(strAux.substring(0, strAux.length() - 1));
 
@@ -132,7 +132,6 @@ public class Artigo {
             
             // adiciona artigo citador na lista
             artigo.adicionarCitacao(artigoCitador);
-
         }
         
         arqCitacoesArtigos.close();

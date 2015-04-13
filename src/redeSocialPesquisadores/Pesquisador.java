@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -45,18 +46,16 @@ public abstract class Pesquisador {
         for (PublicacaoArtigo p : artigosPublicados){
             peso += (1.0 / p.getOrdem());
         }
-        return peso;
-        
+        return peso;   
     }
 
     /**
-    * Metodo que calcula a parte da popularidade que é comum a todos os pesquisadores.
+    * Metodo que calcula a parte da popularidade que e comum a todos os pesquisadores.
     * <p>
-    * A parte comum é a soma do peso de importância, com o número de vezes que os artigos do
+    * A parte comum e a soma do peso de importancia, com o numero de vezes que os artigos do
     * pesquisador foram citados, mais a quantidade de artigos por ele publicados.
     */
-    public Double calcularPopularidadeBase(){
-        
+    public Double calcularPopularidadeBase() {
         Integer qteCitacoes = 0;
         Double peso = this.calcularPeso();
         Integer qteArtigosPublicados = artigosPublicados.size();
@@ -105,7 +104,7 @@ public abstract class Pesquisador {
         try {
         	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
         } catch (FileNotFoundException ex) {
-        	// tratar excecao de arquivo n�o encontrado
+        	// tratar excecao de arquivo nao encontrado
         }
         
         while (arqPesquisadores.hasNextLong()) {
@@ -116,7 +115,7 @@ public abstract class Pesquisador {
         	numGradOrient = arqPesquisadores.nextInt();
         	numMestOrient = arqPesquisadores.nextInt();
         	
-        	// seleciona �ltimo campo como string e retira �ltimo caractere antes de converter para Integereiro (quebra de linha)
+        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
         	strAux = arqPesquisadores.next();
         	numDocOrient = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
         	
@@ -167,7 +166,7 @@ public abstract class Pesquisador {
         	idArtigo = arqGrafoArtigosPesquisadores.nextLong();
         	idPesquisador = arqGrafoArtigosPesquisadores.nextLong();
         	
-        	// seleciona �ltimo campo como string e retira �ltimo caractere antes de converter para Integereiro (quebra de linha)
+        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
         	strAux = arqGrafoArtigosPesquisadores.next();
         	ordem = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
         	
@@ -199,10 +198,12 @@ public abstract class Pesquisador {
     public static void escreverPopularidades(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores) {
         
         BufferedWriter output = null;
+        DecimalFormat formato = new DecimalFormat("#.####");
+        
         try {
             output = new BufferedWriter(new FileWriter(caminhoArquivo, true));        
             for (Pesquisador p : pesquisadores) {
-                output.append(p.getIdPesquisador() + ";" + p.calcularPopularidade());
+                output.append(p.getIdPesquisador() + ";" + (formato.format(p.calcularPopularidade())));
                 output.newLine();
             }
 
@@ -214,5 +215,4 @@ public abstract class Pesquisador {
         
         return;
     }
-    
 }

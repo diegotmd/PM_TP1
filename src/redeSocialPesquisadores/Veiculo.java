@@ -15,26 +15,32 @@ public abstract class Veiculo {
 
     public Veiculo(Long id){
         this.idVeiculo = id;
+        this.artigosPublicados = new LinkedList<Artigo>();
     }
     
     public Long getIdVeiculo() {
     	return this.idVeiculo;
     }
+    
+    public void adicionarArtigoPublicado (Artigo artigo) {
+    	this.artigosPublicados.add(artigo);
+    	return;
+    }
 
     /**
-    * Metodo que calcula a parte comum ao fator de impacto dos veículos, independente do seu tipo.
+    * Metodo que calcula a parte comum ao fator de impacto dos veiculos, independente do seu tipo.
     * <p>
-    * A fórmula é c(v) / n(v), em que c(v) é o número de vezes que os artigos presentes no veículo 
-    * e n(v) é o número de artigos publicados nesse veículo.
+    * A formula e c(v) / n(v), em que c(v) e o numero de vezes que os artigos presentes no veiculo 
+    * foram citados e n(v) e o numero de artigos publicados nesse veiculo.
     */
     protected Double calcularFatorImpactoBase(){
         Integer citacoes = 0;
-        Double fatorImpacto = 0.0;
         
-        for (Artigo a : artigosPublicados){
-            citacoes+= a.quantidadeDeCitacoes();
+        for (Artigo a : this.artigosPublicados){
+            citacoes += a.quantidadeDeCitacoes();
         }
-        return (double) citacoes / artigosPublicados.size();
+        
+        return (double) citacoes / this.artigosPublicados.size();
     }
     
     /**
@@ -53,7 +59,8 @@ public abstract class Veiculo {
     */
     public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo){
         Long idVeiculo;
-    	Character tipoVeiculo;
+    	String tipoVeiculo;
+    	String strAux;
         
     	LinkedList<Veiculo> veiculos = new LinkedList<Veiculo>();
         Veiculo veiculo = null;
@@ -62,18 +69,21 @@ public abstract class Veiculo {
         try {
         	arqVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
         } catch (FileNotFoundException ex) {
-        	// tratar excecao de arquivo n�o encontrado
+        	// tratar excecao de arquivo nao encontrado
         }
         
         while (arqVeiculos.hasNext()) {
         	idVeiculo = arqVeiculos.nextLong();
-        	tipoVeiculo = arqVeiculos.next().toCharArray()[0];
+
+        	// seleciona ultimo campo como string para remover quebra de linha
+        	strAux = arqVeiculos.next();
+        	tipoVeiculo = strAux.substring(0, strAux.length() - 1);
         	
         	switch (tipoVeiculo) {
-        	case 'R':
+        	case "R":
         		veiculo = new Revista(idVeiculo);
         	break;
-        	case 'C':
+        	case "C":
         		veiculo = new Conferencia(idVeiculo);
         	break;
         	}

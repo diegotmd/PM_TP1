@@ -34,6 +34,5 @@ public class PesquisadorDoutor extends Pesquisador {
                (10 * this.getQteAlunosGraduacaoOrientados()) +
                (20 * this.getQteAlunosMestradoOrientados()) +
                (30 * this.getQteAlunosDouturadoOrientados());
-    }
-	
+    }	
 }

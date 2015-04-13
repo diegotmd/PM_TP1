@@ -22,5 +22,4 @@ public class PesquisadorMestre extends Pesquisador {
                this.getQteHorasEstagioDocencia() +
                (10 * this.getQteAlunosGraduacaoOrientados());
     }	
-
 }
