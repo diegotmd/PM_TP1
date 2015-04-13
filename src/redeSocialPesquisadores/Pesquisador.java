@@ -2,6 +2,9 @@ package redeSocialPesquisadores;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -36,12 +39,35 @@ public abstract class Pesquisador {
     */
     public Double calcularPeso() {
         // Calcula o peso de um pesquisador conforme os artigos por ele publicados
-        Integer peso;
+        Double peso = 0.0;
 
         // para cada artigo publicado, soma (1/ordem)
-        return 0.0;
+        for (PublicacaoArtigo p : artigosPublicados){
+            peso += (1.0 / p.getOrdem());
+        }
+        return peso;
+        
     }
 
+    /**
+    * Metodo que calcula a parte da popularidade que Ã© comum a todos os pesquisadores.
+    * <p>
+    * A parte comum Ã© a soma do peso de importÃ¢ncia, com o nÃºmero de vezes que os artigos do
+    * pesquisador foram citados, mais a quantidade de artigos por ele publicados.
+    */
+    public Double calcularPopularidadeBase(){
+        
+        Integer qteCitacoes = 0;
+        Double peso = this.calcularPeso();
+        Integer qteArtigosPublicados = artigosPublicados.size();
+                
+        for (PublicacaoArtigo p : artigosPublicados){
+            qteCitacoes += p.getArtigo().quantidadeDeCitacoes();
+        }
+        
+        return peso + (double) qteCitacoes + (double) qteArtigosPublicados;
+    }
+    
     /**
     * Metodo abstrato que calcula a popularidade de um pesquisador.
     * <p>
@@ -79,7 +105,7 @@ public abstract class Pesquisador {
         try {
         	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
         } catch (FileNotFoundException ex) {
-        	// tratar excecao de arquivo não encontrado
+        	// tratar excecao de arquivo nï¿½o encontrado
         }
         
         while (arqPesquisadores.hasNextLong()) {
@@ -90,7 +116,7 @@ public abstract class Pesquisador {
         	numGradOrient = arqPesquisadores.nextInt();
         	numMestOrient = arqPesquisadores.nextInt();
         	
-        	// seleciona último campo como string e retira último caractere antes de converter para inteiro (quebra de linha)
+        	// seleciona ï¿½ltimo campo como string e retira ï¿½ltimo caractere antes de converter para Integereiro (quebra de linha)
         	strAux = arqPesquisadores.next();
         	numDocOrient = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
         	
@@ -134,14 +160,14 @@ public abstract class Pesquisador {
         try {
         	arqGrafoArtigosPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
         } catch (FileNotFoundException ex) {
-        	// tratar excecao de arquivo não encontrado
+        	// tratar excecao de arquivo nao encontrado
         }
         
         while (arqGrafoArtigosPesquisadores.hasNextLong()) {
         	idArtigo = arqGrafoArtigosPesquisadores.nextLong();
         	idPesquisador = arqGrafoArtigosPesquisadores.nextLong();
         	
-        	// seleciona último campo como string e retira último caractere antes de converter para inteiro (quebra de linha)
+        	// seleciona ï¿½ltimo campo como string e retira ï¿½ltimo caractere antes de converter para Integereiro (quebra de linha)
         	strAux = arqGrafoArtigosPesquisadores.next();
         	ordem = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
         	
@@ -171,7 +197,22 @@ public abstract class Pesquisador {
     * @param pesquisadores lista de pesquisadores da rede social
     */
     public static void escreverPopularidades(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores) {
+        
+        BufferedWriter output = null;
+        try {
+            output = new BufferedWriter(new FileWriter(caminhoArquivo, true));        
+            for (Pesquisador p : pesquisadores) {
+                output.append(p.getIdPesquisador() + ";" + p.calcularPopularidade());
+                output.newLine();
+            }
+
+            output.flush();
+            output.close();
+        } catch (IOException ex) {
+        	// tratar excecao de arquivo nao encontrado
+        }
+        
         return;
     }
-
+    
 }
