@@ -8,8 +8,7 @@ public class Revista extends Veiculo {
     
     @Override
     public Double calcularFatorImpacto() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.calcularFatorImpactoBase() + 2.0;
     }
 
 }
