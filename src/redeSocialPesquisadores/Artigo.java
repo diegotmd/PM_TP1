@@ -1,6 +1,9 @@
 package redeSocialPesquisadores;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Artigo {
 
@@ -27,7 +30,7 @@ public class Artigo {
     }
 
     /**
-    * Adiciona um registro Ã  lista de artigos que citaram esta instÃ¢ncia de artigo.
+    * Adiciona um registro a lista de artigos que citaram esta instancia de artigo.
     * 
     * @param artigo Artigo citador.
     */
@@ -44,7 +47,37 @@ public class Artigo {
     * @param veiculos Lista de veiculos existentes na rede social.
     */
     public static LinkedList<Artigo> carregarArtigos(String caminhoArquivo, LinkedList<Veiculo> veiculos){
-        LinkedList<Artigo> artigos = new LinkedList<Artigo>(); 
+        Long idArtigo;
+        Long idVeiculo;
+    	String strAux;
+        
+    	LinkedList<Artigo> artigos = new LinkedList<Artigo>(); 
+        Artigo artigo = null;
+        Scanner arqArtigosVeiculos = null;
+
+        try {
+        	arqArtigosVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        } catch (FileNotFoundException ex) {
+        	// tratar excecao de arquivo não encontrado
+        }
+        
+        while (arqArtigosVeiculos.hasNextLong()) {
+        	idArtigo = arqArtigosVeiculos.nextLong();
+
+        	// seleciona último campo como string e retira último caractere antes de converter para inteiro (quebra de linha)
+        	strAux = arqArtigosVeiculos.next();
+        	idVeiculo = Long.parseLong(strAux.substring(0, strAux.length() - 1));
+        	
+        	for (Veiculo veiculo : veiculos) {
+        		if (veiculo.getIdVeiculo().equals(idVeiculo)) {
+        			artigo = new Artigo(idArtigo, veiculo);
+        		}
+        	}
+        	
+        	artigos.add(artigo);
+        }
+        
+        arqArtigosVeiculos.close();
         return artigos;
     }
 

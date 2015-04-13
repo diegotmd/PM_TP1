@@ -13,6 +13,10 @@ public abstract class Veiculo {
     public Veiculo(Long id){
         this.idVeiculo = id;
     }
+    
+    public Long getIdVeiculo() {
+    	return this.idVeiculo;
+    }
 
     /**
     * Metodo abstrato. Calcula fator de impacto de um veiculo.
@@ -58,6 +62,7 @@ public abstract class Veiculo {
         	veiculos.add(veiculo);
         } 
  
+        arqVeiculos.close();
         return veiculos;
     }
         

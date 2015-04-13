@@ -82,7 +82,7 @@ public abstract class Pesquisador {
         	// tratar excecao de arquivo não encontrado
         }
         
-        while (arqPesquisadores.hasNext()) {
+        while (arqPesquisadores.hasNextLong()) {
         	idPesquisador = arqPesquisadores.nextLong();
         	tagTitulacao = arqPesquisadores.next();
         	qtdHorasIC = arqPesquisadores.nextInt();
@@ -109,6 +109,7 @@ public abstract class Pesquisador {
         	listaPesquisadores.add(pesquisador);
         } 
  
+        arqPesquisadores.close();
         return listaPesquisadores;
     }
 
@@ -122,7 +123,44 @@ public abstract class Pesquisador {
     * @param artigos lista de artigos da rede social
     */
     public static void carregarPublicacoes(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores, LinkedList<Artigo> artigos) {
-        return;
+        Long idArtigo;
+        Long idPesquisador;
+        Integer ordem;
+    	String strAux;
+        
+    	Artigo artigo = null;
+    	Scanner arqGrafoArtigosPesquisadores = null;
+        
+        try {
+        	arqGrafoArtigosPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        } catch (FileNotFoundException ex) {
+        	// tratar excecao de arquivo não encontrado
+        }
+        
+        while (arqGrafoArtigosPesquisadores.hasNextLong()) {
+        	idArtigo = arqGrafoArtigosPesquisadores.nextLong();
+        	idPesquisador = arqGrafoArtigosPesquisadores.nextLong();
+        	
+        	// seleciona último campo como string e retira último caractere antes de converter para inteiro (quebra de linha)
+        	strAux = arqGrafoArtigosPesquisadores.next();
+        	ordem = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
+        	
+        	// encontra artigo
+        	for (Artigo artigoFor : artigos) {
+        		if (artigoFor.getIdArtigo().equals(idArtigo)) {
+        			artigo = artigoFor;
+        		}
+        	}
+        	
+        	// encontra pesquisador e inclui publicacao
+        	for (Pesquisador pesquisador : pesquisadores) {
+        		if (pesquisador.getIdPesquisador().equals(idPesquisador)) {
+        			pesquisador.adicionarArtigoPublicado(artigo, ordem);
+        		}
+        	}
+        }
+    	
+    	return;
     }
     
     /**
