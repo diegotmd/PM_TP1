@@ -16,8 +16,11 @@ public class PesquisadorMestre extends Pesquisador {
 
     @Override
     public Double calcularPopularidade() {
-            // TODO Auto-generated method stub
-            return null;
+            
+        return this.calcularPopularidadeBase() +
+               this.getQteHorasIniciacaoCientifica() +
+               this.getQteHorasEstagioDocencia() +
+               (10 * this.getQteAlunosGraduacaoOrientados());
     }	
 
 }
