@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Artigo {
@@ -100,7 +101,7 @@ public class Artigo {
     * @param artigo Artigo citador.
     * @param veiculos Lista de veiculos existentes na rede social.
     */
-    public static void carregarCitacoes(String caminhoArquivo, LinkedList<Artigo> artigos){
+    public static void carregarCitacoes(String caminhoArquivo, LinkedList<Artigo> artigos) throws IOException {
         Long idArtigo, idArtigoCitador;
     	String strAux;
         
@@ -110,8 +111,8 @@ public class Artigo {
 
         try {
             arqCitacoesArtigos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
-        } catch (FileNotFoundException ex) {
-            // tratar excecao de arquivo nao encontrado
+        } catch (IOException ex) {
+        	throw ex;
         }
         
         while (arqCitacoesArtigos.hasNextLong()) {
@@ -144,13 +145,16 @@ public class Artigo {
     * 
     * @param caminhoArquivo caminho completo do arquivo que sera gerado
     * @param artigos lista de veiculos da rede social
+     * @throws IOException 
     */
-    public static void escreverQualidadeArtigos(String caminhoArquivo, LinkedList<Artigo> artigos) {
-        BufferedWriter output = null;
+    public static void escreverQualidadeArtigos(String caminhoArquivo, LinkedList<Artigo> artigos) throws IOException {
+    	
+    	BufferedWriter output = null;
+        
         try {
-            output = new BufferedWriter(new FileWriter(caminhoArquivo, true));        
+            output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
             for (Artigo a : artigos) {
-                output.append(a.getIdArtigo()+ ";" + a.calcularQualidade());
+                output.append(a.getIdArtigo()+ ";" + String.format(Locale.ENGLISH, "%.4f", a.calcularQualidade()));
                 output.newLine();
             }
 
@@ -158,6 +162,7 @@ public class Artigo {
             output.close();
         } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
+        	throw ex;
         }
         
         return;
