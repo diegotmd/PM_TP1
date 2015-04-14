@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public abstract class Veiculo {
@@ -57,7 +58,7 @@ public abstract class Veiculo {
     * 
     * @param caminhoArquivo caminho completo do arquivo contendo os dados de veiculos
     */
-    public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo){
+    public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo) throws IOException {
         Long idVeiculo;
     	String tipoVeiculo;
     	String strAux;
@@ -68,8 +69,8 @@ public abstract class Veiculo {
         
         try {
         	arqVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
-        } catch (FileNotFoundException ex) {
-        	// tratar excecao de arquivo nao encontrado
+        } catch (IOException ex) {
+        	throw ex;
         }
         
         while (arqVeiculos.hasNext()) {
@@ -101,13 +102,14 @@ public abstract class Veiculo {
     * 
     * @param caminhoArquivo caminho completo do arquivo que sera gerado
     * @param veiculos lista de veiculos da rede social
+     * @throws IOException 
     */
-    public static void escreverFatorImpactoVeiculos(String caminhoArquivo, LinkedList<Veiculo> veiculos) {
+    public static void escreverFatorImpactoVeiculos(String caminhoArquivo, LinkedList<Veiculo> veiculos) throws IOException {
         BufferedWriter output = null;
         try {
-            output = new BufferedWriter(new FileWriter(caminhoArquivo, true));        
+            output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
             for (Veiculo v : veiculos) {
-                output.append(v.getIdVeiculo()+ ";" + v.calcularFatorImpacto());
+                output.append(v.getIdVeiculo()+ ";" + String.format(Locale.ENGLISH, "%.4f", v.calcularFatorImpacto()));
                 output.newLine();
             }
 
@@ -115,6 +117,7 @@ public abstract class Veiculo {
             output.close();
         } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
+        	throw ex;
         }
         
         return;
