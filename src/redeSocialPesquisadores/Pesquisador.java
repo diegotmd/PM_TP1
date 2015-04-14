@@ -5,8 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public abstract class Pesquisador {
@@ -86,8 +86,9 @@ public abstract class Pesquisador {
     /**
     * Metodo estatico que le um arquivo contendo os pesquisadores e seus dados
     * e carrega uma lista de pesquisadores, que e retornada.
+     * @throws FileNotFoundException 
     */
-    public static LinkedList<Pesquisador> carregarPesquisadores(String caminhoArquivo) {
+    public static LinkedList<Pesquisador> carregarPesquisadores(String caminhoArquivo) throws IOException {
         Long idPesquisador;
     	String tagTitulacao;
     	Integer qtdHorasIC;
@@ -103,8 +104,9 @@ public abstract class Pesquisador {
 
         try {
         	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
+        	throw ex;
         }
         
         while (arqPesquisadores.hasNextLong()) {
@@ -143,7 +145,7 @@ public abstract class Pesquisador {
     * pesquisadores, uma por linha, no formato "id_artigo;id_pesquisador;ordem_publicacao",
     * carregando os dados nas listas de artigos publicados dos pesquisadores.
     * 
-    * @param caminhoArquivo caminho completo do arquivo contendo os dados de publicações
+    * @param caminhoArquivo caminho completo do arquivo contendo os dados de publicaÃ§Ãµes
     * @param pesquisadores lista de pesquisadores da rede social
     * @param artigos lista de artigos da rede social
     */
@@ -158,7 +160,7 @@ public abstract class Pesquisador {
         
         try {
         	arqGrafoArtigosPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
         }
         
@@ -194,23 +196,23 @@ public abstract class Pesquisador {
     * 
     * @param caminhoArquivo caminho completo do arquivo que sera gerado
     * @param pesquisadores lista de pesquisadores da rede social
+     * @throws IOException 
     */
-    public static void escreverPopularidades(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores) {
+    public static void escreverPopularidades(String caminhoArquivo, LinkedList<Pesquisador> pesquisadores) throws IOException {
         
         BufferedWriter output = null;
-        DecimalFormat formato = new DecimalFormat("#.####");
         
         try {
-            output = new BufferedWriter(new FileWriter(caminhoArquivo, true));        
+            output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
             for (Pesquisador p : pesquisadores) {
-                output.append(p.getIdPesquisador() + ";" + (formato.format(p.calcularPopularidade())));
+                output.append(p.getIdPesquisador() + ";" + (String.format(Locale.ENGLISH, "%.4f", p.calcularPopularidade())));
                 output.newLine();
             }
 
             output.flush();
             output.close();
         } catch (IOException ex) {
-        	// tratar excecao de arquivo nao encontrado
+        	throw ex;
         }
         
         return;
