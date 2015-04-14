@@ -5,11 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Artigo {
+public class Artigo implements Comparable<Artigo> {
 
     private Long idArtigo;
     private Veiculo veiculoPublicado;
@@ -59,24 +60,20 @@ public class Artigo {
     public static LinkedList<Artigo> carregarArtigos(String caminhoArquivo, LinkedList<Veiculo> veiculos){
         Long idArtigo;
         Long idVeiculo;
-    	String strAux;
-        
+    	
     	LinkedList<Artigo> artigos = new LinkedList<Artigo>(); 
         Artigo artigo = null;
         Scanner arqArtigosVeiculos = null;
 
         try {
-        	arqArtigosVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        	arqArtigosVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\r\n");
         } catch (FileNotFoundException ex) {
         	// tratar excecao de arquivo nao encontrado
         }
         
         while (arqArtigosVeiculos.hasNextLong()) {
         	idArtigo = arqArtigosVeiculos.nextLong();
-
-        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
-        	strAux = arqArtigosVeiculos.next();
-        	idVeiculo = Long.parseLong(strAux.substring(0, strAux.length() - 1));
+        	idVeiculo = arqArtigosVeiculos.nextLong();
         	
         	// encontra veiculo, cria artigo e associa a lista de artigos do veiculo
         	for (Veiculo veiculo : veiculos) {
@@ -103,24 +100,20 @@ public class Artigo {
     */
     public static void carregarCitacoes(String caminhoArquivo, LinkedList<Artigo> artigos) throws IOException {
         Long idArtigo, idArtigoCitador;
-    	String strAux;
-        
+    	
         Artigo artigo = null;
         Artigo artigoCitador = null;
         Scanner arqCitacoesArtigos = null;
 
         try {
-            arqCitacoesArtigos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+            arqCitacoesArtigos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\r\n");
         } catch (IOException ex) {
         	throw ex;
         }
         
         while (arqCitacoesArtigos.hasNextLong()) {
             idArtigo = arqCitacoesArtigos.nextLong();
-
-            // seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
-            strAux = arqCitacoesArtigos.next();
-            idArtigoCitador = Long.parseLong(strAux.substring(0, strAux.length() - 1));
+            idArtigoCitador = arqCitacoesArtigos.nextLong();
 
             for (Artigo a : artigos) {
                 if (a.getIdArtigo().equals(idArtigo)) {
@@ -153,6 +146,9 @@ public class Artigo {
         
         try {
             output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
+            
+            Collections.sort(artigos);
+            
             for (Artigo a : artigos) {
                 output.append(a.getIdArtigo()+ ";" + String.format(Locale.ENGLISH, "%.4f", a.calcularQualidade()));
                 output.newLine();
@@ -167,5 +163,17 @@ public class Artigo {
         
         return;
     }
-	
+
+    /**
+     * Sobrescrita do metodo compareTo da interface Comparable<T> para realizar a ordenacao dos artigos
+     * */
+    @Override
+    public int compareTo(Artigo artigoComparado) {
+        if (this.idArtigo < artigoComparado.idArtigo) {
+            return -1;
+        } else if (this.idArtigo > artigoComparado.idArtigo) {
+            return 1;
+        }
+        return 0;
+    }
 }

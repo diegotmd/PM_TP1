@@ -1,15 +1,15 @@
 package redeSocialPesquisadores;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public abstract class Veiculo {
+public abstract class Veiculo implements Comparable<Veiculo> {
 
     private Long idVeiculo;
     private LinkedList<Artigo> artigosPublicados;
@@ -61,24 +61,20 @@ public abstract class Veiculo {
     public static LinkedList<Veiculo> carregarVeiculos(String caminhoArquivo) throws IOException {
         Long idVeiculo;
     	String tipoVeiculo;
-    	String strAux;
         
     	LinkedList<Veiculo> veiculos = new LinkedList<Veiculo>();
         Veiculo veiculo = null;
         Scanner arqVeiculos = null;
         
         try {
-        	arqVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        	arqVeiculos = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\r\n");
         } catch (IOException ex) {
         	throw ex;
         }
         
         while (arqVeiculos.hasNext()) {
         	idVeiculo = arqVeiculos.nextLong();
-
-        	// seleciona ultimo campo como string para remover quebra de linha
-        	strAux = arqVeiculos.next();
-        	tipoVeiculo = strAux.substring(0, strAux.length() - 1);
+        	tipoVeiculo = arqVeiculos.next();
         	
         	switch (tipoVeiculo) {
         	case "R":
@@ -107,7 +103,10 @@ public abstract class Veiculo {
     public static void escreverFatorImpactoVeiculos(String caminhoArquivo, LinkedList<Veiculo> veiculos) throws IOException {
         BufferedWriter output = null;
         try {
-            output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
+            output = new BufferedWriter(new FileWriter(caminhoArquivo, false)); 
+            
+            Collections.sort(veiculos);
+                        
             for (Veiculo v : veiculos) {
                 output.append(v.getIdVeiculo()+ ";" + String.format(Locale.ENGLISH, "%.4f", v.calcularFatorImpacto()));
                 output.newLine();
@@ -121,5 +120,18 @@ public abstract class Veiculo {
         }
         
         return;
+    }
+    
+    /**
+     * Sobrescrita do metodo compareTo da interface Comparable<T> para realizar a ordenacao dos veiculos
+     * */
+    @Override
+    public int compareTo(Veiculo veiculoComparado) {
+        if (this.idVeiculo < veiculoComparado.idVeiculo) {
+            return -1;
+        } else if (this.idVeiculo > veiculoComparado.idVeiculo) {
+            return 1;
+        }
+        return 0;
     }
 }

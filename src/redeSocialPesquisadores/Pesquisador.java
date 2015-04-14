@@ -5,11 +5,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public abstract class Pesquisador {
+public abstract class Pesquisador implements Comparable<Pesquisador> {
 	
     private final Long idPesquisador;
     private final Integer qteHorasIniciacaoCientifica;
@@ -96,14 +97,13 @@ public abstract class Pesquisador {
     	Integer numGradOrient;
     	Integer numMestOrient;
     	Integer numDocOrient;
-    	String strAux;
     	        
     	LinkedList<Pesquisador> listaPesquisadores = new LinkedList<Pesquisador>();
         Pesquisador pesquisador = null;
         Scanner arqPesquisadores = null;
 
         try {
-        	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        	arqPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\r\n");
         } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
         	throw ex;
@@ -116,10 +116,7 @@ public abstract class Pesquisador {
         	qtdHorasED = arqPesquisadores.nextInt();
         	numGradOrient = arqPesquisadores.nextInt();
         	numMestOrient = arqPesquisadores.nextInt();
-        	
-        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
-        	strAux = arqPesquisadores.next();
-        	numDocOrient = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
+        	numDocOrient = arqPesquisadores.nextInt();  	
         	
         	switch (tagTitulacao) {
         	case "G":
@@ -153,13 +150,12 @@ public abstract class Pesquisador {
         Long idArtigo;
         Long idPesquisador;
         Integer ordem;
-    	String strAux;
-        
+    	
     	Artigo artigo = null;
     	Scanner arqGrafoArtigosPesquisadores = null;
         
         try {
-        	arqGrafoArtigosPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\n");
+        	arqGrafoArtigosPesquisadores = new Scanner(new FileReader(caminhoArquivo)).useDelimiter("\\;|\\r\n");
         } catch (IOException ex) {
         	// tratar excecao de arquivo nao encontrado
         }
@@ -167,10 +163,7 @@ public abstract class Pesquisador {
         while (arqGrafoArtigosPesquisadores.hasNextLong()) {
         	idArtigo = arqGrafoArtigosPesquisadores.nextLong();
         	idPesquisador = arqGrafoArtigosPesquisadores.nextLong();
-        	
-        	// seleciona ultimo campo como string e retira ultimo caractere antes de converter para Inteiro (quebra de linha)
-        	strAux = arqGrafoArtigosPesquisadores.next();
-        	ordem = Integer.parseInt(strAux.substring(0, strAux.length() - 1));
+        	ordem = arqGrafoArtigosPesquisadores.nextInt();
         	
         	// encontra artigo
         	for (Artigo artigoFor : artigos) {
@@ -204,6 +197,9 @@ public abstract class Pesquisador {
         
         try {
             output = new BufferedWriter(new FileWriter(caminhoArquivo, false));        
+            
+            Collections.sort(pesquisadores);
+            
             for (Pesquisador p : pesquisadores) {
                 output.append(p.getIdPesquisador() + ";" + (String.format(Locale.ENGLISH, "%.4f", p.calcularPopularidade())));
                 output.newLine();
@@ -216,5 +212,20 @@ public abstract class Pesquisador {
         }
         
         return;
+    }
+    
+    /**
+     * Sobrescrita do metodo compareTo da interface Comparable<T> para realizar a ordenacao dos pesquisadores
+     * 
+     * @param pesquisadorComparado objeto de Pesquisador que sera comparado com a instancia atual
+     * */
+    @Override
+    public int compareTo(Pesquisador pesquisadorComparado) {
+        if (this.idPesquisador < pesquisadorComparado.idPesquisador) {
+            return -1;
+        } else if (this.idPesquisador > pesquisadorComparado.idPesquisador) {
+            return 1;
+        }
+        return 0;
     }
 }

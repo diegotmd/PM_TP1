@@ -40,7 +40,7 @@ public class Main {
         	System.out.println("Erro de leitura/escrita de arquivo: \r\n" + ex.getMessage());
         }
         catch (Exception ex) {
-        	System.out.println("Erro na execução: \r\n" + ex.getMessage());
+        	System.out.println("Erro na execucao: \r\n" + ex.getMessage());
         }
 
 
