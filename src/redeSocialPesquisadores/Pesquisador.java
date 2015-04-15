@@ -10,6 +10,9 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe Conferencia, representa um tipo de Veículo de publicação, possui a própria forma de cálculo do fato de impacto.
+ */
 public abstract class Pesquisador implements Comparable<Pesquisador> {
 	
     private final Long idPesquisador;
