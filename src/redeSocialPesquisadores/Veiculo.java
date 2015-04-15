@@ -9,6 +9,10 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe abstrata Veiculo, representa veículos que publicam os artigos.
+ * Encapsula os dados e ações comuns a todos os tipos de veículos: Revistas e Conferências. 
+ */
 public abstract class Veiculo implements Comparable<Veiculo> {
 
     private Long idVeiculo;
