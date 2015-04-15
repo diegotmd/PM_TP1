@@ -1,5 +1,8 @@
 package redeSocialPesquisadores;
 
+/**
+ * Classe PesquisadorGraduado, representa pesquisadores que são somente graduados. Possui uma forma específica de cálculo da popularidade na rede social.
+ */
 public class PesquisadorGraduado extends Pesquisador {
 
     public PesquisadorGraduado(Long id, Integer qteHorasIC, Integer qteHorasED){
