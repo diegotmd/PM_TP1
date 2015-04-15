@@ -1,5 +1,8 @@
 package redeSocialPesquisadores;
 
+/**
+ * Classe PesquisadorDoutor, representa pesquisadores que são doutores. Possui uma forma específica de cálculo da popularidade na rede social.
+ */
 public class PesquisadorDoutor extends Pesquisador {
 
     private Integer qteAlunosGraduacaoOrientados;
