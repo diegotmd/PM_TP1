@@ -10,6 +10,10 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe Artigo, representa artigos publicados por pesquisadores em veículos.
+ */
+ 
 public class Artigo implements Comparable<Artigo> {
 
     private Long idArtigo;
